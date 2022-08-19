@@ -42,4 +42,28 @@ app.post('/funcionarios', (req, res) =>{
 })
 
 
+//função que realiza a busca por id
+function buscarCliente(id){
+    return clientes.findIndex(cliente =>cliente.id == id)
+}
+
+//Consultar cliente por id
+app.get('/clientes/:id', (req, res) =>{
+    let index = buscarCliente(req.params.id)
+    res.json(clientes[index])
+})
+
+app.put('/clientes/:id', (req, res) => {
+    let index = buscarCliente(req.params.id)
+    clientes[index] = req.body
+    res.json(clientes)
+})
+
+//Excluir cliente por id
+app.delete('/clientes/:id', (req, res) =>{
+    let index = buscarCliente(req.params.id)
+    clientes.splice(index, 1)
+    res.send("Cliente excluido com sucesso!")
+})
+
 export default app
